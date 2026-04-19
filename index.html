@@ -8,6 +8,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Lottie Animation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+
     <style>
         :root {
             --sage-green: #8B9D83;
@@ -22,60 +26,53 @@
             --black: #1A1A1A;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--warm-white); color: var(--charcoal); overflow-x: hidden; }
+        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
+
+        /* --- LOTTIE FLOWER ANIMATION --- */
+        .lottie-flowers-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
         }
 
-        html {
-            scroll-behavior: smooth;
+        .lottie-container {
+            position: absolute;
+            pointer-events: none;
+            animation: floatFlower 6s ease-in-out infinite;
         }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--warm-white);
-            color: var(--charcoal);
-            overflow-x: hidden;
+        .flower-1 { top: 8%; left: 3%; width: 140px; height: 140px; animation-delay: 0s; opacity: 0.7; }
+        .flower-2 { top: 15%; right: 5%; width: 110px; height: 110px; animation-delay: 1.5s; opacity: 0.6; }
+        .flower-3 { bottom: 12%; left: 6%; width: 90px; height: 90px; animation-delay: 3s; opacity: 0.5; }
+        .flower-4 { top: 40%; right: 12%; width: 70px; height: 70px; animation-delay: 2s; opacity: 0.6; }
+        .flower-5 { top: 65%; left: 15%; width: 60px; height: 60px; animation-delay: 4s; opacity: 0.5; }
+
+        @keyframes floatFlower {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(12deg); }
         }
 
-        h1, h2, h3, h4 {
-            font-family: 'Playfair Display', serif;
+        @media (max-width: 768px) {
+            .flower-2, .flower-4, .flower-5 { display: none; }
+            .flower-1 { width: 100px; height: 100px; opacity: 0.4; left: -10px; }
+            .flower-3 { width: 70px; height: 70px; opacity: 0.3; }
         }
 
-        /* Enhanced Sparkle Effects */
+        /* --- SPARKLE EFFECTS --- */
         @keyframes sparkleRotate {
-            0% { 
-                opacity: 0; 
-                transform: scale(0) rotate(0deg) translate(0, 0); 
-            }
-            25% {
-                opacity: 1;
-            }
-            50% { 
-                transform: scale(1) rotate(180deg) translate(30px, -30px); 
-            }
-            75% {
-                opacity: 0.8;
-            }
-            100% { 
-                opacity: 0; 
-                transform: scale(0.5) rotate(360deg) translate(60px, -60px); 
-            }
-        }
-
-        @keyframes sparkleOrbit {
-            0% {
-                opacity: 0;
-                transform: rotate(0deg) translateX(0) scale(0);
-            }
-            30% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-                transform: rotate(360deg) translateX(80px) scale(0.5);
-            }
+            0% { opacity: 0; transform: scale(0) rotate(0deg) translate(0, 0); }
+            25% { opacity: 1; }
+            50% { transform: scale(1) rotate(180deg) translate(30px, -30px); }
+            75% { opacity: 0.8; }
+            100% { opacity: 0; transform: scale(0.5) rotate(360deg) translate(60px, -60px); }
         }
 
         @keyframes float {
@@ -96,19 +93,8 @@
         }
 
         @keyframes ripple {
-            0% {
-                transform: scale(0);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(4);
-                opacity: 0;
-            }
-        }
-
-        @keyframes magneticPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.08); }
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(4); opacity: 0; }
         }
 
         .sparkle {
@@ -123,1034 +109,252 @@
             animation: sparkleRotate 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
         }
 
-        .sparkle::before,
-        .sparkle::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: inherit;
-            border-radius: inherit;
-            animation: sparkleOrbit 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        .sparkle::before, .sparkle::after {
+            content: ''; position: absolute; width: 100%; height: 100%; background: inherit; border-radius: inherit;
+            animation: sparkleRotate 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
         }
-
-        .sparkle::before {
-            animation-delay: 0.1s;
-            filter: hue-rotate(30deg);
-        }
-
-        .sparkle::after {
-            animation-delay: 0.2s;
-            filter: hue-rotate(60deg);
-        }
+        .sparkle::before { animation-delay: 0.1s; filter: hue-rotate(30deg); }
+        .sparkle::after { animation-delay: 0.2s; filter: hue-rotate(60deg); }
 
         .sparkle-star {
-            position: fixed;
-            font-size: 16px;
-            color: var(--terracotta);
-            pointer-events: none;
-            z-index: 9999;
-            animation: sparkleRotate 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-            text-shadow: 0 0 10px var(--pink-soft);
+            position: fixed; font-size: 16px; color: var(--terracotta); pointer-events: none; z-index: 9999;
+            animation: sparkleRotate 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; text-shadow: 0 0 10px var(--pink-soft);
         }
 
-        /* Ripple Effect */
         .ripple {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.6);
-            transform: scale(0);
-            animation: ripple 0.6s ease-out;
-            pointer-events: none;
+            position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.6); transform: scale(0); animation: ripple 0.6s ease-out; pointer-events: none;
         }
 
-        /* Magnetic Button Effect */
-        .magnetic-btn {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        .magnetic-btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s ease, height 0.6s ease;
-            pointer-events: none;
-        }
-
-        .magnetic-btn:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .magnetic-btn:active {
-            transform: scale(0.95);
-        }
-
-        /* Glow Effect */
-        .glow-effect {
-            position: relative;
-        }
-
-        .glow-effect::after {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, var(--terracotta), var(--pink-soft), var(--sage-green), var(--terracotta));
-            border-radius: inherit;
-            z-index: -1;
-            opacity: 0;
-            filter: blur(10px);
-            transition: opacity 0.3s ease;
-        }
-
-        .glow-effect:hover::after {
-            opacity: 0.6;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        /* Particle Burst */
         .particle {
-            position: fixed;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
+            position: fixed; width: 8px; height: 8px; border-radius: 50%; pointer-events: none; z-index: 9999;
         }
 
-        /* Navigation */
+        /* --- NAVIGATION --- */
         nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(250, 247, 242, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            padding: 1rem 5%;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
+            position: fixed; top: 0; width: 100%; background: rgba(250, 247, 242, 0.95); backdrop-filter: blur(10px);
+            z-index: 1000; padding: 1rem 5%; box-shadow: 0 2px 20px rgba(0,0,0,0.05); transition: all 0.3s ease;
         }
-
-        nav.scrolled {
-            padding: 0.5rem 5%;
-            box-shadow: 0 4px 30px rgba(0,0,0,0.1);
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .logo:hover {
-            transform: scale(1.05) rotate(2deg);
-        }
-
+        nav.scrolled { padding: 0.5rem 5%; box-shadow: 0 4px 30px rgba(0,0,0,0.1); }
+        .nav-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        
+        .logo { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; transition: transform 0.3s; }
+        .logo:hover { transform: scale(1.05) rotate(2deg); }
         .logo-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--cream);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            border: 2px solid var(--terracotta);
-            transition: all 0.3s ease;
+            width: 50px; height: 50px; background: var(--cream); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+            border: 2px solid var(--terracotta); transition: all 0.3s ease;
         }
+        .logo:hover .logo-icon { animation: float 2s ease-in-out infinite; }
+        .logo-text { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--charcoal); letter-spacing: -1px; }
+        .logo-text span { color: var(--terracotta); }
 
-        .logo:hover .logo-icon {
-            animation: float 2s ease-in-out infinite;
-        }
-
-        .logo-text {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--charcoal);
-            letter-spacing: -1px;
-        }
-
-        .logo-text span {
-            color: var(--terracotta);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--charcoal);
-            font-weight: 500;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--charcoal); font-weight: 500; position: relative; transition: all 0.3s ease; }
         .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
+            content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px;
             background: linear-gradient(90deg, var(--terracotta), var(--pink-soft));
             transition: width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover { color: var(--terracotta); transform: translateY(-2px); }
 
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: var(--terracotta);
-            transform: translateY(-2px);
-        }
-
-        .-cta {
-            background: linear-gradient(135deg, var(--terracotta), var(--pink-muted));
-            color: white;
-            padding: 0.7rem 1.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
+        .nav-cta {
+            background: linear-gradient(135deg, var(--terracotta), var(--pink-muted)); color: white;
+            padding: 0.7rem 1.5rem; border-radius: 50px; text-decoration: none; font-weight: 600;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 4px 15px rgba(217, 122, 107, 0.3);
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(217, 122, 107, 0.3); position: relative; overflow: hidden;
         }
+        .nav-cta:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 8px 25px rgba(217, 122, 107, 0.5); }
 
-        .nav-cta::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .nav-cta:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .nav-cta:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(217, 122, 107, 0.5);
-        }
-
-        /* Hero Section */
+        /* --- HERO SECTION --- */
         .hero {
-            margin-top: 80px;
-            padding: 4rem 5%;
-            background: linear-gradient(135deg, var(--sage-green) 0%, var(--sage-light) 100%);
-            min-height: 90vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
+            margin-top: 80px; padding: 4rem 5%; background: linear-gradient(135deg, var(--sage-green) 0%, var(--sage-light) 100%);
+            min-height: 90vh; display: flex; align-items: center; position: relative; overflow: hidden;
         }
-
         .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 800px;
-            height: 800px;
+            content: ''; position: absolute; top: -50%; right: -20%; width: 800px; height: 800px;
             background: radial-gradient(circle, rgba(232, 180, 184, 0.3) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: float 8s ease-in-out infinite;
+            border-radius: 50%; animation: float 8s ease-in-out infinite;
         }
-
         .hero-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            position: relative;
-            z-index: 1;
+            max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr;
+            gap: 4rem; align-items: center; position: relative; z-index: 10;
         }
-
-        .hero-content h1 {
-            font-size: 3.5rem;
-            color: white;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .hero-content h1 span {
-            color: var(--cream);
-            position: relative;
-            display: inline-block;
-        }
-
-        .hero-content p {
-            font-size: 1.2rem;
-            color: var(--cream);
-            margin-bottom: 2rem;
-            line-height: 1.8;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
+        .hero-content h1 { font-size: 3.5rem; color: white; margin-bottom: 1rem; line-height: 1.2; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        .hero-content h1 span { color: var(--cream); position: relative; display: inline-block; }
+        .hero-content p { font-size: 1.2rem; color: var(--cream); margin-bottom: 2rem; line-height: 1.8; }
+        .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--terracotta), var(--pink-muted));
-            color: white;
-            padding: 1rem 2.5rem;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
+            background: linear-gradient(135deg, var(--terracotta), var(--pink-muted)); color: white;
+            padding: 1rem 2.5rem; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: 600;
+            cursor: pointer; position: relative; overflow: hidden;
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 4px 15px rgba(217, 122, 107, 0.4);
-            text-decoration: none;
-            display: inline-block;
+            box-shadow: 0 4px 15px rgba(217, 122, 107, 0.4); text-decoration: none; display: inline-block;
         }
-
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.4);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .btn-primary:hover::before {
-            width: 400px;
-            height: 400px;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 12px 35px rgba(217, 122, 107, 0.6);
-        }
-
-        .btn-primary:active {
-            transform: translateY(-2px) scale(0.98);
-        }
+        .btn-primary:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 12px 35px rgba(217, 122, 107, 0.6); }
+        .btn-primary:active { transform: translateY(-2px) scale(0.98); }
 
         .btn-secondary {
-            background: transparent;
-            color: white;
-            padding: 1rem 2.5rem;
-            border: 2px solid white;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
+            background: transparent; color: white; padding: 1rem 2.5rem; border: 2px solid white;
+            border-radius: 50px; font-size: 1.1rem; font-weight: 600; cursor: pointer;
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            text-decoration: none;
-            display: inline-block;
-            position: relative;
-            overflow: hidden;
+            text-decoration: none; display: inline-block; position: relative; overflow: hidden;
         }
-
         .btn-secondary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 100%;
-            background: white;
-            transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            z-index: -1;
+            content: ''; position: absolute; top: 0; left: 0; width: 0; height: 100%;
+            background: white; transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: -1;
         }
+        .btn-secondary:hover::before { width: 100%; }
+        .btn-secondary:hover { color: var(--sage-green); transform: translateY(-5px) scale(1.05); }
 
-        .btn-secondary:hover::before {
-            width: 100%;
-        }
-
-        .btn-secondary:hover {
-            color: var(--sage-green);
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 10px 30px rgba(255,255,255,0.3);
-        }
-
-        .hero-image {
-            position: relative;
-            animation: float 6s ease-in-out infinite;
-        }
-
+        .hero-image { position: relative; animation: float 6s ease-in-out infinite; }
         .hero-card {
-            background: var(--cream);
-            border-radius: 30px;
-            padding: 3rem;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s ease;
+            background: var(--cream); border-radius: 30px; padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2); text-align: center;
+            position: relative; overflow: hidden; transition: transform 0.3s ease;
         }
-
-        .hero-card:hover {
-            transform: rotate(2deg) scale(1.02);
-        }
-
+        .hero-card:hover { transform: rotate(2deg) scale(1.02); }
         .hero-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
             background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
-            transform: rotate(45deg);
-            animation: shimmer 4s infinite;
+            transform: rotate(45deg); animation: shimmer 4s infinite;
         }
+        .mascot { font-size: 8rem; margin-bottom: 1rem; position: relative; z-index: 1; }
+        .hero-card h3 { color: var(--charcoal); font-size: 2rem; margin-bottom: 0.5rem; position: relative; z-index: 1; }
+        .hero-card p { color: var(--terracotta); font-style: italic; position: relative; z-index: 1; }
 
-        .mascot {
-            font-size: 8rem;
-            margin-bottom: 1rem;
-            position: relative;
-            z-index: 1;
-            transition: transform 0.3s ease;
-        }
+        .floating-icons { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; }
+        .float-icon { position: absolute; font-size: 2rem; animation: float 4s ease-in-out infinite; opacity: 0.6; }
+        .float-icon:hover { transform: scale(1.3) rotate(15deg); }
 
-        .hero-card:hover .mascot {
-            animation: float 2s ease-in-out infinite;
-        }
-
-        .hero-card h3 {
-            color: var(--charcoal);
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-card p {
-            color: var(--terracotta);
-            font-style: italic;
-            position: relative;
-            z-index: 1;
-        }
-
-        .floating-icons {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-        }
-
-        .float-icon {
-            position: absolute;
-            font-size: 2rem;
-            animation: float 4s ease-in-out infinite;
-            opacity: 0.6;
-            transition: transform 0.3s ease;
-        }
-
-        .float-icon:hover {
-            transform: scale(1.3) rotate(15deg);
-        }
-
-        /* Categories Section */
-        .categories {
-            padding: 6rem 5%;
-            background: var(--cream);
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-header h2 {
-            font-size: 2.8rem;
-            color: var(--charcoal);
-            margin-bottom: 1rem;
-            position: relative;
-            display: inline-block;
-        }
-
+        /* --- CATEGORIES --- */
+        .categories { padding: 6rem 5%; background: var(--cream); }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-header h2 { font-size: 2.8rem; color: var(--charcoal); margin-bottom: 1rem; position: relative; display: inline-block; }
         .section-header h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--terracotta), var(--pink-soft));
-            border-radius: 2px;
+            content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
+            width: 80px; height: 4px; background: linear-gradient(90deg, var(--terracotta), var(--pink-soft)); border-radius: 2px;
         }
-
-        .section-header p {
-            color: var(--sage-green);
-            font-size: 1.2rem;
-            margin-top: 1.5rem;
-        }
-
-        .categories-grid {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
+        .section-header p { color: var(--sage-green); font-size: 1.2rem; margin-top: 1.5rem; }
+        .categories-grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
         .category-card {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            border: 2px solid transparent;
+            background: white; border-radius: 20px; padding: 2rem; text-align: center;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); cursor: pointer;
+            position: relative; overflow: hidden; border: 2px solid transparent;
         }
+        .category-card:hover { transform: translateY(-15px) rotate(2deg) scale(1.03); border-color: var(--terracotta); box-shadow: 0 20px 50px rgba(139, 157, 131, 0.3); }
+        .category-icon { font-size: 3.5rem; margin-bottom: 1rem; position: relative; z-index: 1; }
+        .category-card:hover .category-icon { transform: scale(1.3) rotate(10deg); }
+        .category-card h3 { color: var(--charcoal); font-size: 1.3rem; margin-bottom: 0.5rem; position: relative; z-index: 1; }
+        .category-card p { color: var(--sage-green); font-size: 0.9rem; position: relative; z-index: 1; }
 
-        .category-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--sage-green), var(--pink-soft));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 0;
-        }
-
-        .category-card:hover::before {
-            opacity: 0.05;
-        }
-
-        .category-card:hover {
-            transform: translateY(-15px) rotate(2deg) scale(1.03);
-            border-color: var(--terracotta);
-            box-shadow: 0 20px 50px rgba(139, 157, 131, 0.3);
-        }
-
-        .category-icon {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            position: relative;
-            z-index: 1;
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .category-card:hover .category-icon {
-            transform: scale(1.3) rotate(10deg);
-        }
-
-        .category-card h3 {
-            color: var(--charcoal);
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            position: relative;
-            z-index: 1;
-            transition: transform 0.3s ease;
-        }
-
-        .category-card:hover h3 {
-            transform: translateY(-3px);
-        }
-
-        .category-card p {
-            color: var(--sage-green);
-            font-size: 0.9rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Products Section */
-        .products {
-            padding: 6rem 5%;
-            background: white;
-        }
-
-        .products-grid {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2.5rem;
-        }
-
+        /* --- PRODUCTS --- */
+        .products { padding: 6rem 5%; background: white; }
+        .products-grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem; }
         .product-card {
-            background: var(--warm-white);
-            border-radius: 25px;
-            overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-            border: 2px solid transparent;
+            background: var(--warm-white); border-radius: 25px; overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; border: 2px solid transparent;
         }
-
-        .product-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: left 0.8s;
-        }
-
-        .product-card:hover::after {
-            left: 100%;
-        }
-
-        .product-card:hover {
-            transform: translateY(-15px) rotate(1deg) scale(1.02);
-            border-color: var(--pink-soft);
-            box-shadow: 0 25px 60px rgba(232, 180, 184, 0.4);
-        }
-
+        .product-card:hover { transform: translateY(-15px) rotate(1deg) scale(1.02); border-color: var(--pink-soft); box-shadow: 0 25px 60px rgba(232, 180, 184, 0.4); }
         .product-image {
-            height: 250px;
-            background: linear-gradient(135deg, var(--sage-green), var(--sage-light));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 5rem;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.5s ease;
+            height: 250px; background: linear-gradient(135deg, var(--sage-green), var(--sage-light));
+            display: flex; align-items: center; justify-content: center; font-size: 5rem;
+            position: relative; overflow: hidden; transition: transform 0.5s ease;
         }
-
-        .product-card:hover .product-image {
-            transform: scale(1.1) rotate(3deg);
-        }
-
+        .product-card:hover .product-image { transform: scale(1.1) rotate(3deg); }
         .product-badge {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: var(--terracotta);
-            color: white;
-            padding: 0.3rem 1rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            z-index: 2;
+            position: absolute; top: 1rem; right: 1rem; background: var(--terracotta); color: white;
+            padding: 0.3rem 1rem; border-radius: 50px; font-size: 0.8rem; font-weight: 600; z-index: 2;
             animation: pulse 2s ease-in-out infinite;
         }
-
-        .product-info {
-            padding: 2rem;
-        }
-
-        .product-info h3 {
-            font-size: 1.5rem;
-            color: var(--charcoal);
-            margin-bottom: 0.5rem;
-            transition: transform 0.3s ease;
-        }
-
-        .product-card:hover .product-info h3 {
-            transform: translateX(5px);
-        }
-
-        .product-info p {
-            color: var(--sage-green);
-            margin-bottom: 1rem;
-            line-height: 1.6;
-        }
-
-        .product-price {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 1rem;
-        }
-
-        .price {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--terracotta);
-            transition: transform 0.3s ease;
-        }
-
-        .product-card:hover .price {
-            transform: scale(1.1);
-        }
-
-        .price-original {
-            text-decoration: line-through;
-            color: #999;
-            font-size: 1rem;
-            margin-left: 0.5rem;
-        }
-
+        .product-info { padding: 2rem; }
+        .product-info h3 { font-size: 1.5rem; color: var(--charcoal); margin-bottom: 0.5rem; }
+        .product-info p { color: var(--sage-green); margin-bottom: 1rem; line-height: 1.6; }
+        .product-price { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; }
+        .price { font-size: 1.4rem; font-weight: 700; color: var(--terracotta); }
+        .product-card:hover .price { transform: scale(1.1); }
+        .price-original { text-decoration: line-through; color: #999; font-size: 1rem; margin-left: 0.5rem; }
         .btn-small {
-            background: var(--sage-green);
-            color: white;
-            padding: 0.6rem 1.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            background: var(--sage-green); color: white; padding: 0.6rem 1.5rem; border-radius: 50px;
+            text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: all 0.3s;
             display: inline-block;
-            position: relative;
-            overflow: hidden;
         }
+        .btn-small:hover { background: var(--terracotta); transform: scale(1.1) rotate(3deg); }
 
-        .btn-small::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.4s, height 0.4s;
-        }
-
-        .btn-small:hover::before {
-            width: 200px;
-            height: 200px;
-        }
-
-        .btn-small:hover {
-            background: var(--terracotta);
-            transform: scale(1.1) rotate(3deg);
-            box-shadow: 0 5px 15px rgba(217, 122, 107, 0.4);
-        }
-
-        /* Features Section */
+        /* --- FEATURES --- */
         .features {
-            padding: 6rem 5%;
-            background: linear-gradient(135deg, var(--sage-green) 0%, var(--sage-light) 100%);
-            position: relative;
-            overflow: hidden;
+            padding: 6rem 5%; background: linear-gradient(135deg, var(--sage-green) 0%, var(--sage-light) 100%);
+            position: relative; overflow: hidden;
         }
-
-        .features::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        }
-
-        .features-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .feature-item {
-            text-align: center;
-            color: white;
-            padding: 2rem;
-            transition: transform 0.4s ease;
-        }
-
-        .feature-item:hover {
-            transform: translateY(-10px);
-        }
-
+        .features-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; position: relative; z-index: 1; }
+        .feature-item { text-align: center; color: white; padding: 2rem; transition: transform 0.4s ease; }
+        .feature-item:hover { transform: translateY(-10px); }
         .feature-icon {
-            width: 80px;
-            height: 80px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 2rem;
-            backdrop-filter: blur(10px);
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            width: 80px; height: 80px; background: rgba(255,255,255,0.2); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;
+            font-size: 2rem; backdrop-filter: blur(10px); transition: all 0.5s;
         }
+        .feature-item:hover .feature-icon { transform: scale(1.15) rotate(15deg); background: rgba(255,255,255,0.3); }
+        .feature-item h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+        .feature-item p { opacity: 0.9; line-height: 1.8; }
 
-        .feature-item:hover .feature-icon {
-            transform: scale(1.15) rotate(15deg);
-            background: rgba(255,255,255,0.3);
-            box-shadow: 0 10px 30px rgba(255,255,255,0.2);
-        }
-
-        .feature-item h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-item p {
-            opacity: 0.9;
-            line-height: 1.8;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            padding: 6rem 5%;
-            background: var(--cream);
-            text-align: center;
-            position: relative;
-        }
-
+        /* --- CTA SECTION --- */
+        .cta-section { padding: 6rem 5%; background: var(--cream); text-align: center; position: relative; }
         .cta-box {
-            max-width: 900px;
-            margin: 0 auto;
-            background: linear-gradient(135deg, var(--terracotta), var(--pink-muted));
-            border-radius: 30px;
-            padding: 4rem;
-            color: white;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(217, 122, 107, 0.3);
-            transition: transform 0.3s ease;
+            max-width: 900px; margin: 0 auto; background: linear-gradient(135deg, var(--terracotta), var(--pink-muted));
+            border-radius: 30px; padding: 4rem; color: white; position: relative; overflow: hidden;
+            box-shadow: 0 20px 60px rgba(217, 122, 107, 0.3); transition: transform 0.3s ease;
         }
-
-        .cta-box:hover {
-            transform: scale(1.02);
-        }
-
-        .cta-box::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
-            animation: float 10s ease-in-out infinite;
-        }
-
-        .cta-box h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .cta-box p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-            position: relative;
-            z-index: 1;
-        }
-
+        .cta-box:hover { transform: scale(1.02); }
+        .cta-box h2 { font-size: 2.5rem; margin-bottom: 1rem; position: relative; z-index: 1; }
+        .cta-box p { font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.95; position: relative; z-index: 1; }
         .btn-white {
-            background: white;
-            color: var(--terracotta);
-            padding: 1rem 3rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            display: inline-block;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-            z-index: 1;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            background: white; color: var(--terracotta); padding: 1rem 3rem; border-radius: 50px;
+            text-decoration: none; font-weight: 700; font-size: 1.1rem; display: inline-block;
+            transition: all 0.4s; position: relative; z-index: 1; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
+        .btn-white:hover { transform: translateY(-5px) scale(1.08); box-shadow: 0 12px 35px rgba(0,0,0,0.3); }
 
-        .btn-white::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(217, 122, 107, 0.2);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .btn-white:hover::before {
-            width: 400px;
-            height: 400px;
-        }
-
-        .btn-white:hover {
-            transform: translateY(-5px) scale(1.08);
-            box-shadow: 0 12px 35px rgba(0,0,0,0.3);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--charcoal);
-            color: white;
-            padding: 4rem 5% 2rem;
-        }
-
-        .footer-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
-        }
-
-        .footer-section h3 {
-            color: var(--pink-soft);
-            margin-bottom: 1.5rem;
-            font-size: 1.3rem;
-        }
-
-        .footer-section p,
-        .footer-section a {
-            color: rgba(255,255,255,0.8);
-            text-decoration: none;
-            line-height: 2;
-            transition: all 0.3s ease;
-        }
-
-        .footer-section a:hover {
-            color: var(--terracotta);
-            transform: translateX(5px);
-            display: inline-block;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
+        /* --- FOOTER --- */
+        footer { background: var(--charcoal); color: white; padding: 4rem 5% 2rem; }
+        .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-bottom: 3rem; }
+        .footer-section h3 { color: var(--pink-soft); margin-bottom: 1.5rem; font-size: 1.3rem; }
+        .footer-section p, .footer-section a { color: rgba(255,255,255,0.8); text-decoration: none; line-height: 2; transition: all 0.3s ease; }
+        .footer-section a:hover { color: var(--terracotta); transform: translateX(5px); display: inline-block; }
+        .social-links { display: flex; gap: 1rem; margin-top: 1rem; }
         .social-links a {
-            width: 40px;
-            height: 40px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; transition: all 0.4s;
         }
+        .social-links a:hover { background: var(--terracotta); transform: translateY(-5px) rotate(15deg) scale(1.1); }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); }
 
-        .social-links a:hover {
-            background: var(--terracotta);
-            transform: translateY(-5px) rotate(15deg) scale(1.1);
-            box-shadow: 0 5px 15px rgba(217, 122, 107, 0.4);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            color: rgba(255,255,255,0.6);
-        }
-
-        /* Responsive */
+        /* --- RESPONSIVE --- */
         @media (max-width: 968px) {
-            .hero-container {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .hero-image {
-                order: -1;
-            }
-
-            .hero-card {
-                max-width: 400px;
-                margin: 0 auto;
-            }
+            .hero-container { grid-template-columns: 1fr; text-align: center; }
+            .hero-content h1 { font-size: 2.5rem; }
+            .nav-links { display: none; }
+            .hero-image { order: -1; }
+            .hero-card { max-width: 400px; margin: 0 auto; }
         }
 
-        /* Scroll Animation Classes */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
+        /* --- SCROLL ANIMATIONS --- */
+        .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Loading Animation */
+        /* --- LOADER --- */
         .loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--warm-white);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--warm-white); display: flex; align-items: center;
+            justify-content: center; z-index: 9999; transition: opacity 0.5s ease;
         }
-
-        .loader.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .loader-cat {
-            font-size: 4rem;
-            animation: float 1s ease-in-out infinite;
-        }
+        .loader.hidden { opacity: 0; pointer-events: none; }
+        .loader-cat { font-size: 4rem; animation: float 1s ease-in-out infinite; }
     </style>
 </head>
 <body>
+
     <!-- Loader -->
     <div class="loader" id="loader">
         <div class="loader-cat">🐱</div>
@@ -1171,25 +375,31 @@
                 <li><a href="#features">Keunggulan</a></li>
                 <li><a href="#contact">Kontak</a></li>
             </ul>
-            <a href="#products" class="nav-cta magnetic-btn glow-effect">Mulai Belanja</a>
+            <a href="#products" class="nav-cta">Mulai Belanja</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
+        <!-- Lottie Flower Animations -->
+        <div class="lottie-flowers-wrapper">
+            <div class="lottie-container flower-1" id="flower-1"></div>
+            <div class="lottie-container flower-2" id="flower-2"></div>
+            <div class="lottie-container flower-3" id="flower-3"></div>
+            <div class="lottie-container flower-4" id="flower-4"></div>
+            <div class="lottie-container flower-5" id="flower-5"></div>
+        </div>
+
         <div class="hero-container">
             <div class="hero-content">
                 <h1>Wujudkan Ide Kreatifmu <span>Bersama Kami</span></h1>
                 <p>Dari undangan digital hingga merchandise custom — semua dalam satu platform. Desain mudah, cetak berkualitas, hasil memukau!</p>
                 <div class="hero-buttons">
-                    <a href="#products" class="btn-primary magnetic-btn glow-effect">
-                        Jelajahi Produk ✨
-                    </a>
-                    <a href="template-slider.html" class="btn-secondary magnetic-btn">
+                    <a href="template-slider.html" class="btn-primary">
                         Lihat Template 🎨
                     </a>
-                    <a href="#categories" class="btn-secondary magnetic-btn">
-                        Lihat Kategori
+                    <a href="#products" class="btn-secondary">
+                        Jelajahi Produk ✨
                     </a>
                 </div>
             </div>
@@ -1215,9 +425,7 @@
             <h2>Kategori Produk</h2>
             <p>Pilih kategori yang sesuai dengan kebutuhan kreatifmu</p>
         </div>
-        <div class="categories-grid" id="categoriesGrid">
-            <!-- Categories will be loaded from JSON -->
-        </div>
+        <div class="categories-grid" id="categoriesGrid"></div>
     </section>
 
     <!-- Products Section -->
@@ -1226,9 +434,7 @@
             <h2>Produk Unggulan</h2>
             <p>Temukan desain terbaik untuk berbagai kebutuhanmu</p>
         </div>
-        <div class="products-grid" id="productsGrid">
-            <!-- Products will be loaded from JSON -->
-        </div>
+        <div class="products-grid" id="productsGrid"></div>
     </section>
 
     <!-- Features Section -->
@@ -1266,7 +472,7 @@
         <div class="cta-box fade-in">
             <h2>Siap Wujudkan Projek Kreatifmu?</h2>
             <p>Mulai desain sekarang dan dapatkan diskon 20% untuk pemesanan pertama!</p>
-            <a href="#products" class="btn-white magnetic-btn glow-effect">Mulai Sekarang 🚀</a>
+            <a href="template-slider.html" class="btn-white">Lihat Template 🚀</a>
         </div>
     </section>
 
@@ -1313,7 +519,45 @@
     </footer>
 
     <script>
-        // JSON Data for Categories and Products
+        // ============================================
+        // LOTTIE ANIMATION - Load from JSON file
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // IMPORTANT: Rename your JSON file to "flower.json" (no spaces)
+            // Then upload it to the same folder as index.html
+            
+            const flowerIds = ['flower-1', 'flower-2', 'flower-3', 'flower-4', 'flower-5'];
+            
+            flowerIds.forEach((id, index) => {
+                const container = document.getElementById(id);
+                if (container && typeof lottie !== 'undefined') {
+                    // Load animation from external JSON file
+                    const anim = lottie.loadAnimation({
+                        container: container,
+                        renderer: 'svg',
+                        loop: true,
+                        autoplay: true,
+                        path: 'flower.json',  // ← RENAME your file to flower.json
+                        rendererSettings: {
+                            preserveAspectRatio: 'xMidYMid meet'
+                        }
+                    });
+                    
+                    // Different speed for each flower
+                    setTimeout(() => {
+                        anim.setSpeed(0.6 + (index * 0.15));
+                    }, 100);
+                    
+                    console.log('✅ Flower animation loaded:', id);
+                } else {
+                    console.warn('⚠️ Lottie not loaded or container not found:', id);
+                }
+            });
+        });
+
+        // ============================================
+        // JSON DATA - Categories & Products
+        // ============================================
         const data = {
             categories: [
                 { icon: "💌", name: "Undangan", desc: "Digital & Cetak", count: "150+ Template" },
@@ -1326,130 +570,24 @@
                 { icon: "🎨", name: "Poster", desc: "Banner & Poster", count: "90+ Desain" }
             ],
             products: [
-                {
-                    id: 1,
-                    name: "Undangan Digital Premium",
-                    description: "Undangan digital interaktif dengan RSVP, countdown, dan musik. Bisa edit sendiri!",
-                    price: 75000,
-                    originalPrice: 150000,
-                    badge: "Best Seller",
-                    icon: "💌",
-                    category: "Undangan"
-                },
-                {
-                    id: 2,
-                    name: "Paket Souvenir Wedding",
-                    description: "Gantungan kunci, magnet, notebook custom dengan desain eksklusif",
-                    price: 15000,
-                    originalPrice: 25000,
-                    badge: "Populer",
-                    icon: "🎁",
-                    category: "Souvenir"
-                },
-                {
-                    id: 3,
-                    name: "Sticker Label UMKM",
-                    description: "Sticker vinyl waterproof untuk packaging produk UMKM, minimal order 50pcs",
-                    price: 50000,
-                    originalPrice: 100000,
-                    badge: "Promo",
-                    icon: "🏷️",
-                    category: "Sticker"
-                },
-                {
-                    id: 4,
-                    name: "Kalender Dinding Custom",
-                    description: "Kalender 2024 dengan foto dan desain personalmu, ukuran A3",
-                    price: 85000,
-                    originalPrice: 120000,
-                    badge: "New",
-                    icon: "📅",
-                    category: "Kalender"
-                },
-                {
-                    id: 5,
-                    name: "Greeting Card Luxury",
-                    description: "Kartu ucapan premium dengan emboss dan amplop elegan",
-                    price: 25000,
-                    originalPrice: 40000,
-                    badge: null,
-                    icon: "💳",
-                    category: "Greeting Card"
-                },
-                {
-                    id: 6,
-                    name: "Amplop Undangan Premium",
-                    description: "Amplop custom dengan printing foil dan beludru, paket 100pcs",
-                    price: 350000,
-                    originalPrice: 500000,
-                    badge: "Hemat 30%",
-                    icon: "📦",
-                    category: "Packaging"
-                },
-                {
-                    id: 7,
-                    name: "Banner Standing Roll",
-                    description: "Banner roll up 60x160cm untuk event dan promosi bisnis",
-                    price: 175000,
-                    originalPrice: 250000,
-                    badge: null,
-                    icon: "🎨",
-                    category: "Poster"
-                },
-                {
-                    id: 8,
-                    name: "Cover Buku Softcover",
-                    description: "Cover buku custom untuk novel, skripsi, atau company profile",
-                    price: 15000,
-                    originalPrice: 25000,
-                    badge: null,
-                    icon: "📚",
-                    category: "Cover Buku"
-                },
-                {
-                    id: 9,
-                    name: "Totebag Custom Sablon",
-                    description: "Totebag kanvas dengan sablon designmu, minimal 12pcs",
-                    price: 35000,
-                    originalPrice: 50000,
-                    badge: "Best Seller",
-                    icon: "🛍️",
-                    category: "Souvenir"
-                },
-                {
-                    id: 10,
-                    name: "Undangan Fisik Luxury",
-                    description: "Undangan cetak dengan bahan art carton 260gr + amplop beludru",
-                    price: 8500,
-                    originalPrice: 12000,
-                    badge: "Populer",
-                    icon: "💌",
-                    category: "Undangan"
-                },
-                {
-                    id: 11,
-                    name: "Sticker Hologram",
-                    description: "Sticker hologram security untuk branding produk premium",
-                    price: 100000,
-                    originalPrice: 150000,
-                    badge: "New",
-                    icon: "✨",
-                    category: "Sticker"
-                },
-                {
-                    id: 12,
-                    name: "Bungkus Kado Custom",
-                    description: "Wrapping paper dengan design personalmu, roll besar",
-                    price: 45000,
-                    originalPrice: 65000,
-                    badge: null,
-                    icon: "🎀",
-                    category: "Packaging"
-                }
+                { id: 1, name: "Undangan Digital Premium", description: "Undangan digital interaktif dengan RSVP, countdown, dan musik. Bisa edit sendiri!", price: 75000, originalPrice: 150000, badge: "Best Seller", icon: "💌", category: "Undangan" },
+                { id: 2, name: "Paket Souvenir Wedding", description: "Gantungan kunci, magnet, notebook custom dengan desain eksklusif", price: 15000, originalPrice: 25000, badge: "Populer", icon: "🎁", category: "Souvenir" },
+                { id: 3, name: "Sticker Label UMKM", description: "Sticker vinyl waterproof untuk packaging produk UMKM, minimal order 50pcs", price: 50000, originalPrice: 100000, badge: "Promo", icon: "🏷️", category: "Sticker" },
+                { id: 4, name: "Kalender Dinding Custom", description: "Kalender 2024 dengan foto dan desain personalmu, ukuran A3", price: 85000, originalPrice: 120000, badge: "New", icon: "📅", category: "Kalender" },
+                { id: 5, name: "Greeting Card Luxury", description: "Kartu ucapan premium dengan emboss dan amplop elegan", price: 25000, originalPrice: 40000, badge: null, icon: "💳", category: "Greeting Card" },
+                { id: 6, name: "Amplop Undangan Premium", description: "Amplop custom dengan printing foil dan beludru, paket 100pcs", price: 350000, originalPrice: 500000, badge: "Hemat 30%", icon: "📦", category: "Packaging" },
+                { id: 7, name: "Banner Standing Roll", description: "Banner roll up 60x160cm untuk event dan promosi bisnis", price: 175000, originalPrice: 250000, badge: null, icon: "🎨", category: "Poster" },
+                { id: 8, name: "Cover Buku Softcover", description: "Cover buku custom untuk novel, skripsi, atau company profile", price: 15000, originalPrice: 25000, badge: null, icon: "📚", category: "Cover Buku" },
+                { id: 9, name: "Totebag Custom Sablon", description: "Totebag kanvas dengan sablon designmu, minimal 12pcs", price: 35000, originalPrice: 50000, badge: "Best Seller", icon: "🛍️", category: "Souvenir" },
+                { id: 10, name: "Undangan Fisik Luxury", description: "Undangan cetak dengan bahan art carton 260gr + amplop beludru", price: 8500, originalPrice: 12000, badge: "Populer", icon: "💌", category: "Undangan" },
+                { id: 11, name: "Sticker Hologram", description: "Sticker hologram security untuk branding produk premium", price: 100000, originalPrice: 150000, badge: "New", icon: "✨", category: "Sticker" },
+                { id: 12, name: "Bungkus Kado Custom", description: "Wrapping paper dengan design personalmu, roll besar", price: 45000, originalPrice: 65000, badge: null, icon: "🎀", category: "Packaging" }
             ]
         };
 
-        // Render Categories
+        // ============================================
+        // RENDER FUNCTIONS
+        // ============================================
         function renderCategories() {
             const grid = document.getElementById('categoriesGrid');
             data.categories.forEach((cat, index) => {
@@ -1462,17 +600,10 @@
                     <p>${cat.desc}</p>
                     <small style="color: var(--terracotta); font-weight: 600;">${cat.count}</small>
                 `;
-                
-                // Add click sparkle effect
-                card.addEventListener('click', function(e) {
-                    createParticleBurst(e.clientX, e.clientY);
-                });
-                
                 grid.appendChild(card);
             });
         }
 
-        // Render Products
         function renderProducts() {
             const grid = document.getElementById('productsGrid');
             data.products.forEach((product, index) => {
@@ -1491,24 +622,17 @@
                                 <span class="price">Rp ${product.price.toLocaleString('id-ID')}</span>
                                 ${product.originalPrice ? `<span class="price-original">Rp ${product.originalPrice.toLocaleString('id-ID')}</span>` : ''}
                             </div>
-                            <a href="#" class="btn-small magnetic-btn">Pesan</a>
+                            <a href="template-slider.html" class="btn-small">Pesan</a>
                         </div>
                     </div>
                 `;
-                
-                // Add ripple effect on click
-                const btn = card.querySelector('.btn-small');
-                btn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    createRipple(e, this);
-                    createParticleBurst(e.clientX, e.clientY);
-                });
-                
                 grid.appendChild(card);
             });
         }
 
-        // Create Sparkle Effect
+        // ============================================
+        // SPARKLE & PARTICLE EFFECTS
+        // ============================================
         function createSparkle(x, y) {
             const colors = ['#D97A6B', '#E8B4B8', '#8B9D83', '#FFFFFF'];
             const sparkle = document.createElement('div');
@@ -1520,7 +644,6 @@
             setTimeout(() => sparkle.remove(), 1500);
         }
 
-        // Create Star Sparkle
         function createStarSparkle(x, y) {
             const stars = ['✨', '⭐', '💫', '🌟'];
             const sparkle = document.createElement('div');
@@ -1532,161 +655,81 @@
             setTimeout(() => sparkle.remove(), 1200);
         }
 
-        // Create Particle Burst
         function createParticleBurst(x, y) {
             const colors = ['#D97A6B', '#E8B4B8', '#8B9D83', '#FDF8F3'];
-            const particleCount = 12;
-            
-            for (let i = 0; i < particleCount; i++) {
+            for (let i = 0; i < 12; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 particle.style.left = x + 'px';
                 particle.style.top = y + 'px';
                 particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-                
-                const angle = (Math.PI * 2 * i) / particleCount;
+                const angle = (Math.PI * 2 * i) / 12;
                 const velocity = 80 + Math.random() * 60;
                 const tx = Math.cos(angle) * velocity;
                 const ty = Math.sin(angle) * velocity;
-                
-                particle.style.setProperty('--tx', `${tx}px`);
-                particle.style.setProperty('--ty', `${ty}px`);
-                
                 document.body.appendChild(particle);
-                
-                // Animate particle
                 particle.animate([
                     { transform: 'translate(0, 0) scale(1)', opacity: 1 },
                     { transform: `translate(${tx}px, ${ty}px) scale(0)`, opacity: 0 }
-                ], {
-                    duration: 800 + Math.random() * 400,
-                    easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                    fill: 'forwards'
-                });
-                
+                ], { duration: 800 + Math.random() * 400, easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)', fill: 'forwards' });
                 setTimeout(() => particle.remove(), 1200);
             }
         }
 
-        // Create Ripple Effect
         function createRipple(e, button) {
             const ripple = document.createElement('span');
             ripple.className = 'ripple';
-            
             const rect = button.getBoundingClientRect();
             const size = Math.max(rect.width, rect.height);
-            const x = e.clientX - rect.left - size / 2;
-            const y = e.clientY - rect.top - size / 2;
-            
             ripple.style.width = ripple.style.height = size + 'px';
-            ripple.style.left = x + 'px';
-            ripple.style.top = y + 'px';
-            
+            ripple.style.left = e.clientX - rect.left - size / 2 + 'px';
+            ripple.style.top = e.clientY - rect.top - size / 2 + 'px';
             button.appendChild(ripple);
             setTimeout(() => ripple.remove(), 600);
         }
 
-        // Magnetic Button Effect
-        function initMagneticButtons() {
-            const buttons = document.querySelectorAll('.magnetic-btn');
-            
-            buttons.forEach(btn => {
-                btn.addEventListener('mousemove', function(e) {
-                    const rect = this.getBoundingClientRect();
-                    const x = e.clientX - rect.left - rect.width / 2;
-                    const y = e.clientY - rect.top - rect.height / 2;
-                    
-                    const moveX = x * 0.2;
-                    const moveY = y * 0.2;
-                    
-                    this.style.transform = `translate(${moveX}px, ${moveY}px)`;
-                });
-                
-                btn.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translate(0, 0)';
-                });
-            });
-        }
-
-        // Scroll Effects
+        // ============================================
+        // SCROLL & EVENT HANDLERS
+        // ============================================
         function handleScroll() {
             const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
+            if (window.scrollY > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
 
-            // Fade in animation
             const elements = document.querySelectorAll('.fade-in');
             elements.forEach(el => {
                 const rect = el.getBoundingClientRect();
-                if (rect.top < window.innerHeight - 100) {
-                    el.classList.add('visible');
-                }
+                if (rect.top < window.innerHeight - 100) el.classList.add('visible');
             });
         }
 
-        // Initialize
+        // ============================================
+        // INITIALIZE
+        // ============================================
         window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('loader').classList.add('hidden');
-            }, 1000);
-            
+            setTimeout(() => document.getElementById('loader').classList.add('hidden'), 1000);
             renderCategories();
             renderProducts();
-            initMagneticButtons();
         });
 
         window.addEventListener('scroll', handleScroll);
 
-        // Global click sparkle effect
+        // Global click sparkle
         document.addEventListener('click', (e) => {
-            // Create sparkles on every click
             for (let i = 0; i < 3; i++) {
                 setTimeout(() => {
-                    const offsetX = (Math.random() - 0.5) * 40;
-                    const offsetY = (Math.random() - 0.5) * 40;
-                    createSparkle(e.clientX + offsetX, e.clientY + offsetY);
+                    createSparkle(e.clientX + (Math.random()-0.5)*40, e.clientY + (Math.random()-0.5)*40);
                 }, i * 100);
             }
-            
-            // Occasionally create star sparkle
-            if (Math.random() > 0.5) {
-                setTimeout(() => {
-                    createStarSparkle(e.clientX, e.clientY);
-                }, 150);
-            }
+            if (Math.random() > 0.5) setTimeout(() => createStarSparkle(e.clientX, e.clientY), 150);
         });
 
-        // Button click handlers
-        document.querySelectorAll('.btn-primary, .btn-secondary, .btn-white, .nav-cta').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                createParticleBurst(e.clientX, e.clientY);
-            });
-        });
-
-        // Smooth scroll for navigation
+        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-
-        // Add hover sparkle to interactive elements
-        document.querySelectorAll('.category-card, .product-card, .feature-item').forEach(el => {
-            el.addEventListener('mouseenter', function(e) {
-                const rect = this.getBoundingClientRect();
-                const x = rect.left + rect.width / 2;
-                const y = rect.top + rect.height / 2;
-                
-                setTimeout(() => {
-                    createStarSparkle(x, y);
-                }, 300);
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         });
     </script>
