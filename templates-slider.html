@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koleksi Template | TOKOFIN</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --sage-green: #8B9D83;
+            --sage-light: #A8B8A0;
+            --pink-soft: #E8B4B8;
+            --pink-muted: #D4A5A5;
+            --terracotta: #D97A6B;
+            --terracotta-dark: #C67B6C;
+            --warm-white: #FAF7F2;
+            --cream: #FDF8F3;
+            --charcoal: #2D2D2D;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: var(--warm-white); color: var(--charcoal); overflow-x: hidden; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
+        /* --- PREMIUM BUTTON EFFECTS --- */
+        .magnetic-btn { 
+            position: relative; 
+            overflow: hidden; 
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); 
+            cursor: pointer; 
+            will-change: transform;
+        }
+        .magnetic-btn::before { 
+            content: ''; 
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            width: 0; 
+            height: 0; 
+            border-radius: 50%; 
+            background: rgba(255,255,255,0.3); 
+            transform: translate(-50%, -50%); 
+            transition: width 0.6s, height 0.6s; 
+            pointer-events: none; 
+        }
+        .magnetic-btn:hover::before { width: 300px; height: 300px; }
+        .magnetic-btn:active { transform: scale(0.97); }
+        
+        .glow-effect { position: relative; }
+        .glow-effect::after { 
+            content: ''; 
+            position: absolute; 
+            top: -2px; left: -2px; right: -2px; bottom: -2px; 
+            background: linear-gradient(45deg, var(--terracotta), var(--pink-soft), var(--sage-green), var(--terracotta)); 
+            border-radius: inherit; 
+            z-index: -1; 
+            opacity: 0; 
+            filter: blur(8px); 
+            transition: opacity 0.3s; 
+        }
+        .glow-effect:hover::after { opacity: 0.6; animation: pulse 2s infinite; }
+        
+        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.6; } 50% { transform: scale(1.05); opacity: 0.8; } }
+        
+        .ripple { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.6); transform: scale(0); animation: rippleAnim 0.6s ease-out; pointer-events: none; }
+        @keyframes rippleAnim { to { transform: scale(4); opacity: 0; } }
+
+        .sparkle, .sparkle-star { position: fixed; pointer-events: none; z-index: 9999; }
+        .sparkle { width: 10px; height: 10px; background: radial-gradient(circle, #fff 0%, var(--terracotta) 40%, var(--pink-soft) 100%); border-radius: 50%; box-shadow: 0 0 8px var(--terracotta); animation: sparkleRot 1.2s forwards; }
+        @keyframes sparkleRot { 0% { opacity:0; transform:scale(0) rotate(0); } 50% { opacity:1; transform:scale(1) rotate(180deg) translate(20px,-20px); } 100% { opacity:0; transform:scale(0.5) rotate(360deg) translate(40px,-40px); } }
+        .sparkle-star { font-size: 14px; color: var(--terracotta); animation: sparkleRot 1s forwards; text-shadow: 0 0 5px var(--pink-soft); }
+
+        /* --- NAV --- */
+        nav { position: fixed; top: 0; width: 100%; background: rgba(250, 247, 242, 0.95); backdrop-filter: blur(10px); z-index: 1000; padding: 1rem 5%; box-shadow: 0 2px 20px rgba(0,0,0,0.05); transition: padding 0.3s; }
+        nav.scrolled { padding: 0.7rem 5%; box-shadow: 0 4px 30px rgba(0,0,0,0.1); }
+        .nav-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; transition: transform 0.3s; }
+        .logo:hover { transform: scale(1.05) rotate(2deg); }
+        .logo-icon { width: 40px; height: 40px; background: var(--cream); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--terracotta); transition: 0.3s; }
+        .logo:hover .logo-icon { transform: rotate(10deg); }
+        .logo-text { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--charcoal); }
+        .logo-text span { color: var(--terracotta); }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--charcoal); font-weight: 500; position: relative; transition: 0.3s; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--terracotta); transition: width 0.3s; }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover { color: var(--terracotta); transform: translateY(-2px); }
+        
+        /* ✅ CTA BUTTON - IMPROVED */
+        .nav-cta { 
+            background: linear-gradient(135deg, var(--terracotta), var(--pink-muted)); 
+            color: white; 
+            padding: 0.7rem 1.8rem; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: 600; 
+            font-size: 0.95rem; 
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); 
+            box-shadow: 0 4px 15px rgba(217,122,107,0.35); 
+            position: relative; 
+            overflow: hidden; 
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .nav-cta::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+            transition: left 0.5s;
+        }
+        .nav-cta:hover::before { left: 100%; }
+        .nav-cta:hover { 
+            transform: translateY(-3px) scale(1.03); 
+            box-shadow: 0 10px 30px rgba(217,122,107,0.5); 
+        }
+        .nav-cta:active { transform: translateY(-1px) scale(0.98); }
+
+        /* --- HEADER & TABS --- */
+        .page-header { margin-top: 80px; padding: 3rem 5% 1rem; text-align: center; }
+        .page-header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--charcoal); }
+        .page-header p { color: var(--sage-green); font-size: 1.1rem; }
+        
+        .tabs { display: flex; justify-content: center; gap: 1rem; margin: 2rem 0 3rem; flex-wrap: wrap; }
+        
+        /* ✅ TAB BUTTON - IMPROVED */
+        .tab-btn { 
+            background: white; 
+            border: 1px solid #E2E8F0; 
+            color: #64748B; 
+            padding: 0.7rem 2rem; 
+            border-radius: 50px; 
+            font-family: 'Poppins', sans-serif; 
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            position: relative;
+            overflow: hidden;
+        }
+        .tab-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            border-radius: 50%;
+            background: rgba(139, 157, 131, 0.15);
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+            pointer-events: none;
+        }
+        .tab-btn:hover::before { width: 250px; height: 250px; }
+        .tab-btn:hover { 
+            border-color: var(--sage-light); 
+            color: var(--sage-green); 
+            transform: translateY(-2px); 
+        }
+        
+        /* Tab yang Sedang Aktif */
+        .tab-btn.active { 
+            background: var(--sage-green); 
+            color: white; 
+            border-color: var(--sage-green); 
+            box-shadow: 0 6px 20px rgba(139, 157, 131, 0.4); 
+            transform: translateY(-2px);
+        }
+        .tab-btn.active:hover { transform: translateY(-4px); }
+
+        /* --- SLIDER --- */
+        .slider-wrapper { position: relative; max-width: 1400px; margin: 0 auto; padding: 0 5% 4rem; }
+        .slider-container { 
+            display: flex; 
+            overflow-x: auto; 
+            scroll-snap-type: x mandatory; 
+            gap: 25px; 
+            padding: 10px 5px 30px; 
+            scrollbar-width: none; 
+            -ms-overflow-style: none; 
+            scroll-behavior: smooth;
+        }
+        .slider-container::-webkit-scrollbar { display: none; }
+        
+        .card { 
+            flex: 0 0 300px; 
+            height: 450px; 
+            background: white; 
+            border-radius: 20px; 
+            overflow: hidden; 
+            scroll-snap-align: center; 
+            position: relative; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); 
+            cursor: pointer; 
+            border: 2px solid transparent;
+        }
+        .card:hover { 
+            transform: translateY(-10px) rotate(1deg) scale(1.02); 
+            box-shadow: 0 20px 40px rgba(139, 157, 131, 0.25); 
+            border-color: var(--pink-soft);
+        }
+        .card-image { width: 100%; height: 75%; object-fit: cover; transition: transform 0.5s ease; }
+        .card:hover .card-image { transform: scale(1.1) rotate(2deg); }
+        .card-info { padding: 1.2rem; position: relative; background: white; height: 25%; }
+        .card-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.3rem; color: var(--charcoal); transition: 0.3s; }
+        .card:hover .card-title { transform: translateX(3px); color: var(--terracotta); }
+        .card-desc { font-size: 0.85rem; color: var(--sage-green); }
+        .card-badge { 
+            position: absolute; 
+            top: 1rem; 
+            left: 1rem; 
+            background: var(--terracotta); 
+            color: white; 
+            padding: 0.3rem 0.8rem; 
+            border-radius: 50px; 
+            font-size: 0.7rem; 
+            font-weight: 600; 
+            animation: pulse 2s infinite; 
+            z-index: 2;
+        }
+
+        /* --- DOTS --- */
+        .dots-container { display: flex; justify-content: center; gap: 10px; margin-top: 1.5rem; }
+        .dot { 
+            width: 12px; 
+            height: 12px; 
+            background: var(--sage-light); 
+            border-radius: 50%; 
+            cursor: pointer; 
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); 
+            opacity: 0.5; 
+        }
+        .dot:hover { opacity: 0.8; transform: scale(1.2); }
+        .dot.active { 
+            background: var(--terracotta); 
+            transform: scale(1.4); 
+            opacity: 1; 
+            box-shadow: 0 0 0 4px rgba(217, 122, 107, 0.2), 0 0 12px var(--pink-soft); 
+        }
+
+        footer { background: var(--charcoal); color: white; padding: 2rem; text-align: center; margin-top: 2rem; }
+        
+        @media (max-width: 768px) { 
+            .card { flex: 0 0 260px; height: 400px; } 
+            .page-header h1 { font-size: 2rem; } 
+            .nav-links { display: none; } 
+            .tabs { gap: 0.5rem; }
+            .tab-btn { padding: 0.6rem 1.5rem; font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">🐱</div>
+                <div class="logo-text">TOKO<span>FIN</span></div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="template-slider.html" style="color: var(--terracotta);">Template</a></li>
+            </ul>
+            <a href="index.html#contact" class="nav-cta magnetic-btn glow-effect">
+                Pesan Sekarang <i class="fas fa-arrow-right" style="font-size: 0.8rem;"></i>
+            </a>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <h1>Koleksi Template</h1>
+        <p>Swipe ke kiri/kanan untuk melihat lebih banyak desain ✨</p>
+    </header>
+
+    <div class="tabs">
+        <button class="tab-btn magnetic-btn glow-effect active" onclick="switchCategory('online')">📱 Undangan Online</button>
+        <button class="tab-btn magnetic-btn glow-effect" onclick="switchCategory('fisik')">💌 Undangan Fisik</button>
+        <button class="tab-btn magnetic-btn glow-effect" onclick="switchCategory('souvenir')">🎁 Souvenir</button>
+    </div>
+
+    <div class="slider-wrapper">
+        <div class="slider-container" id="sliderContainer"></div>
+        <div class="dots-container" id="dotsContainer"></div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 TOKOFIN. Creative Store. Made with ❤️ & 🍒</p>
+    </footer>
+
+    <script>
+        // --- DATA PRODUK ---
+        const products = {
+            online: [
+                { title: "Floral Minimalist", desc: "Editable link & RSVP auto", img: "https://via.placeholder.com/300x350/8B9D83/ffffff?text=Online+1", badge: "Best Seller" },
+                { title: "Rustic Elegant", desc: "With Countdown Timer", img: "https://via.placeholder.com/300x350/D97A6B/ffffff?text=Online+2", badge: "New" },
+                { title: "Modern Bold", desc: "Dark Theme Premium", img: "https://via.placeholder.com/300x350/2D2D2D/ffffff?text=Online+3", badge: null },
+                { title: "Pastel Sweet", desc: "Soft Pink & Sage", img: "https://via.placeholder.com/300x350/E8B4B8/ffffff?text=Online+4", badge: "Promo" },
+                { title: "Classic Gold", desc: "Luxury Gold Accent", img: "https://via.placeholder.com/300x350/D4A5A5/ffffff?text=Online+5", badge: null },
+                { title: "Tropical Vibes", desc: "Summer Wedding Theme", img: "https://via.placeholder.com/300x350/A8B8A0/ffffff?text=Online+6", badge: null }
+            ],
+            fisik: [
+                { title: "Amplop Beludru", desc: "Red & Gold Stamping", img: "https://via.placeholder.com/300x350/C67B6C/ffffff?text=Fisik+1", badge: "Premium" },
+                { title: "Hardcover Box", desc: "Box Eksklusif Premium", img: "https://via.placeholder.com/300x350/8B9D83/ffffff?text=Fisik+2", badge: null },
+                { title: "Pocket Fold", desc: "2 Lembar Insert", img: "https://via.placeholder.com/300x350/36454F/ffffff?text=Fisik+3", badge: "Best Seller" },
+                { title: "Acrylic Sheet", desc: "Bening & Elegan", img: "https://via.placeholder.com/300x350/FAF7F2/333333?text=Fisik+4", badge: "New" },
+                { title: "Vintage Kraft", desc: "Rustic Natural Look", img: "https://via.placeholder.com/300x350/D97A6B/ffffff?text=Fisik+5", badge: null },
+                { title: "Pop-up 3D", desc: "Unique Opening Effect", img: "https://via.placeholder.com/300x350/E8B4B8/ffffff?text=Fisik+6", badge: null }
+            ],
+            souvenir: [
+                { title: "Totebag Canvas", desc: "Sablon Premium Quality", img: "https://via.placeholder.com/300x350/8B9D83/ffffff?text=Souvenir+1", badge: null },
+                { title: "Gantungan Kunci", desc: "Acrylic Cut Custom", img: "https://via.placeholder.com/300x350/D97A6B/ffffff?text=Souvenir+2", badge: "Murah" },
+                { title: "Custom Mug", desc: "Heat Press Tahan Lama", img: "https://via.placeholder.com/300x350/2D2D2D/ffffff?text=Souvenir+3", badge: null },
+                { title: "Tin Box Cookies", desc: "Kemasan Biskuit Premium", img: "https://via.placeholder.com/300x350/E8B4B8/ffffff?text=Souvenir+4", badge: null },
+                { title: "Mini Pouch", desc: "Serut & Ritsleting", img: "https://via.placeholder.com/300x350/A8B8A0/ffffff?text=Souvenir+5", badge: null },
+                { title: "Hand Fan", desc: "Kipas Tangan Estetik", img: "https://via.placeholder.com/300x350/D4A5A5/ffffff?text=Souvenir+6", badge: "Trending" }
+            ]
+        };
+
+        const slider = document.getElementById('sliderContainer');
+        const dotsCont = document.getElementById('dotsContainer');
+        let currentCat = 'online';
+
+        function render(cat) {
+            slider.innerHTML = ''; 
+            dotsCont.innerHTML = '';
+            
+            products[cat].forEach((p, i) => {
+                // Card
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.onclick = () => openLightbox(p.img, p.title);
+                card.innerHTML = `
+                    ${p.badge ? `<span class="card-badge">${p.badge}</span>` : ''}
+                    <img src="${p.img}" class="card-image" alt="${p.title}" loading="lazy">
+                    <div class="card-info">
+                        <div class="card-title">${p.title}</div>
+                        <div class="card-desc">${p.desc}</div>
+                    </div>
+                `;
+                slider.appendChild(card);
+
+                // Dot
+                const dot = document.createElement('div');
+                dot.className = `dot ${i===0 ? 'active' : ''}`;
+                dot.onclick = () => scrollToCard(i);
+                dotsCont.appendChild(dot);
+            });
+            updateDots();
+        }
+
+        function scrollToCard(i) { 
+            const cardWidth = 325; // 300px card + 25px gap
+            slider.scrollTo({ left: i * cardWidth, behavior: 'smooth' }); 
+        }
+        
+        function updateDots() {
+            const cardWidth = 325;
+            const idx = Math.round(slider.scrollLeft / cardWidth);
+            document.querySelectorAll('.dot').forEach((d, i) => {
+                d.classList.toggle('active', i === idx);
+            });
+        }
+        
+        slider.addEventListener('scroll', updateDots);
+
+        window.switchCategory = function(cat) {
+            currentCat = cat;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            render(cat);
+        }
+        
+        // Init
+        render('online');
+
+        // --- PREMIUM EFFECTS INIT ---
+        
+        // Magnetic + Ripple untuk tombol
+        document.querySelectorAll('.magnetic-btn').forEach(btn => {
+            btn.addEventListener('mousemove', e => {
+                const r = btn.getBoundingClientRect();
+                const x = e.clientX - r.left - r.width/2;
+                const y = e.clientY - r.top - r.height/2;
+                btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translate(0, 0)';
+            });
+            btn.addEventListener('click', function(e) {
+                // Ripple
+                const r = this.getBoundingClientRect();
+                const ripple = document.createElement('span');
+                ripple.className = 'ripple';
+                const size = Math.max(r.width, r.height);
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = (e.clientX - r.left - size/2) + 'px';
+                ripple.style.top = (e.clientY - r.top - size/2) + 'px';
+                this.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+                
+                // Sparkle burst
+                createSparkleBurst(e.clientX, e.clientY);
+            });
+        });
+
+        // Global Sparkle Effect
+        function createSparkleBurst(x, y) {
+            for(let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    const s = document.createElement('div');
+                    s.className = Math.random() > 0.5 ? 'sparkle' : 'sparkle-star';
+                    const offsetX = (Math.random() - 0.5) * 40;
+                    const offsetY = (Math.random() - 0.5) * 40;
+                    s.style.left = (x + offsetX) + 'px';
+                    s.style.top = (y + offsetY) + 'px';
+                    if(s.className === 'sparkle-star') {
+                        s.textContent = ['✨','⭐','💫'][Math.floor(Math.random() * 3)];
+                    }
+                    document.body.appendChild(s);
+                    setTimeout(() => s.remove(), 1200);
+                }, i * 80);
+            }
+        }
+
+        document.addEventListener('click', e => {
+            // Hanya buat sparkle jika klik bukan di elemen interaktif utama
+            if(!e.target.closest('.card') && !e.target.closest('a')) {
+                createSparkleBurst(e.clientX, e.clientY);
+            }
+        });
+
+        // Lightbox Zoom
+        window.openLightbox = function(src, title) {
+            const lb = document.createElement('div');
+            lb.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.92);z-index:2000;display:flex;align-items:center;justify-content:center;cursor:zoom-out;backdrop-filter:blur(5px);';
+            lb.innerHTML = `
+                <img src="${src}" style="max-width:90%;max-height:85vh;border-radius:12px;box-shadow:0 0 40px rgba(0,0,0,0.6);animation:zoomIn 0.3s ease;">
+                <div style="position:absolute;bottom:30px;color:white;font-size:1.1rem;font-weight:500;text-align:center;padding:0 20px;">${title}</div>
+                <button style="position:absolute;top:20px;right:25px;background:none;border:none;color:white;font-size:2rem;cursor:pointer;transition:0.3s;">&times;</button>
+            `;
+            const closeBtn = lb.querySelector('button');
+            closeBtn.onclick = (e) => { e.stopPropagation(); lb.remove(); };
+            lb.onclick = () => lb.remove();
+            document.body.appendChild(lb);
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if(window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Keyboard navigation for slider
+        slider.addEventListener('keydown', (e) => {
+            if(e.key === 'ArrowRight') {
+                slider.scrollBy({ left: 325, behavior: 'smooth' });
+            } else if(e.key === 'ArrowLeft') {
+                slider.scrollBy({ left: -325, behavior: 'smooth' });
+            }
+        });
+        slider.tabIndex = 0; // Make slider focusable
+
+        // Add keyframe for lightbox zoom
+        const style = document.createElement('style');
+        style.textContent = `@keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }`;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
